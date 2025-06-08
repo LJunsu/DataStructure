@@ -7,7 +7,7 @@ class Node {
     }
 }
 
-class LinkedList {
+export class LinkedList {
     length = 0; // 연결 리스트의 길이
     head = null; // 연결 리스트의 첫 번째 노드 (순회 시 기준점)
     tail = null; // 연결 리스트의 마지막 노드
@@ -62,7 +62,7 @@ class LinkedList {
         } 
 
         this.length--;
-        return this.length;
+        return [this.length, current.value]; // 현재 연결 리스트의 길이와 삭제된 노드의 값 반환
     }
 }
 

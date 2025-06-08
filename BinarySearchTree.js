@@ -12,30 +12,33 @@ class Node {
 // 중복을 허용하지 않거나, 주로 오른쪽에 삽입
 class BinarySearchTree { 
     root = null;
-    length = 0; // 숙제 - insert, remove 시 length 제어
+    #length = 0;
 
     insert(value) {
         if(!this.root) { // root 노드가 없다면
             this.root = new Node(value); // root 노드 추가
+            this.#length++;
         } else { // root 노드가 있다면
             this.#insert(this.root, value); // 자식 노드로 insert 작업
-
-            // 숙제 - 이미 존재하는 값을 insert 시 예외 처리
         }
     }
 
     #insert(node, value) {
-        if(node.value > value) { // 노드의 값보다 추가 할 값이 작다면
+        if(node.value === value) {
+            throw new Error("이미 존재하는 Node입니다.")
+        } else if(node.value > value) { // 노드의 값보다 추가 할 값이 작다면
             if(node.left) { // 왼쪽 자식 노드가 있다면
                 this.#insert(node.left, value); // 재귀를 통해 왼쪽 노드에게 insert를 위임
             } else { // 왼쪽 자식 노드가 없다면
                 node.left = new Node(value); // 왼쪽 자식 노드로 추가
+                this.#length++;
             }
         } else { // 노드의 값보다 추가 할 값이 크거나 같다면
             if(node.right) { // 오른쪽 자식 노드가 있다면 
                 this.#insert(node.right, value); // 재귀를 통해 오른쪽 노드에게 insert를 위임
             } else { // 오른쪽 자식 노드가 없다면
                 node.right = new Node(value); // 오른쪽 자식 노드로 추가
+                this.#length++;
             }
         }
     }
@@ -81,7 +84,7 @@ class BinarySearchTree {
         
         this.root = this.#remove(this.root, value); // 제거할 노드가 없거나, leaf인 노드를 제거했다면 null
 
-        return // 숙제 - length 반환
+        return this.#length;
     }
 
     #remove(node, value) {
@@ -89,17 +92,20 @@ class BinarySearchTree {
             return null; // 제거할 값이 존재하지 않음
         }
 
-        if(node.value === value) { // 제거할 값을 찾은 경우 (자식 노드 입장) - 찾지 못하면 else문이 동작하여 다음 자식 노드로 재귀
+        if(node.value === value) { // 제거할 값을 찾은 경우 (자식 노드 입장) - 찾지 못하면 else문이 동작하여 다음 자식 노드로 재귀            
             // 1. leaf -> 제거
             if(!node.left && !node.right) { // node가 leaf인 경우
+                this.#length--;
                 return null; // 부모 노드에게 제거할 노드임을 알림
             } 
             // 2. leaf x, 왼쪽 자식 노드가 없음 -> 오른쪽 자식 노드를 끌어 올림
             else if(!node.left) { // 부모 노드의 왼쪽 자식만 없는 경우
+                this.#length--;
                 return node.right;
             } 
             // 3. leaf x, 오른쪽 자식 노드가 없음 -> 왼쪽 자식 노드를 끌어 올림
             else if(!node.right) { // 부모 노드의 오른쪽 자식만 없는 경우
+                this.#length--;
                 return node.left;
             } 
             // 4. leaf x, 자식 노드가 2개(양쪽) -> 왼쪽 자식 노드들 중 가장 오른쪽 자식 노드와 변경
@@ -128,4 +134,10 @@ class BinarySearchTree {
             }
         }
     }
+
+    get length() {
+        return this.#length;
+    }
 }
+
+const bst = new BinarySearchTree();

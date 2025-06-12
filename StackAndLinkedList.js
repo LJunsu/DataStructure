@@ -1,6 +1,6 @@
-import { LinkedList } from "./LinkedList.mjs";
+import { LinkedList } from "./LinkedList.js";
 
-class Stack { // LIFO
+export class Stack { // LIFO
     list = new LinkedList(); // 연결 리스트를 사용하여 스택 구현
 
     push(value) {
@@ -13,6 +13,10 @@ class Stack { // LIFO
 
     top() {
         return this.list.search(this.list.length - 1); // 리스트의 마지막 노드의 값을 반환
+    }
+
+    get length() {
+        return this.list.length;
     }
 }
 

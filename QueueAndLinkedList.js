@@ -1,6 +1,6 @@
-import { LinkedList } from "./LinkedList.mjs";
+import { LinkedList } from "./LinkedList.js";
 
-class Queue { // FIFO
+export class Queue { // FIFO
     list = new LinkedList(); // 연결 리스트를 사용하여 큐 구현
 
     enqueue(value) {
@@ -13,6 +13,10 @@ class Queue { // FIFO
 
     peek() {
         return this.list.search(0); // 리스트의 첫번째 노드의 값을 반환
+    }
+
+    get length() {
+        return this.list.length
     }
 }
 

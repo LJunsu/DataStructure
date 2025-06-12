@@ -10,7 +10,7 @@ class Node {
 // 노드당 최대 두 개의 자식 노드
 // 기준 노드보다 작으면 왼쪽, 크면 오른쪽에 자식 노드를 생성
 // 중복을 허용하지 않거나, 주로 오른쪽에 삽입
-class BinarySearchTree { 
+export class BinarySearchTree { 
     root = null;
     #length = 0;
 

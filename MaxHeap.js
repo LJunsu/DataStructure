@@ -28,13 +28,6 @@ class MaxHeap {
         }
     }
 
-    // 힙에 값 추가 시 배열 끝에 삽입 후 reheapUp으로 힙 속성 유지
-    insert(value) {
-        const index = this.arr.length; // 삽입할 위치 - 배열의 마지막 index
-        this.arr[index] = value; // 배열의 마지막에 값 추가
-        this.#reheapUp(index); // 위로 올라가며 최대 힙 구조 유지
-    }
-
     // 부모보다 작은 노드가 아래로 내려가며 최대 힙 성질을 유지하는 재귀 함수
     #reheapDown(index) {
         const leftIndex = index * 2 + 1; // 왼쪽 자식 인덱스 계산
@@ -53,6 +46,30 @@ class MaxHeap {
                 this.#reheapDown(bigger); // 교환한 자식 인덱스로 이동하여 다시 비교
             }
         }
+    }
+
+    // 내부적으로 힙 구조를 복구하기 위해 사용되는 재귀 함수
+    #heapify(index) {
+        const leftIndex = index * 2 + 1;
+        const rightIndex = index * 2 + 2;
+
+        // 존재하지 않는 경우 undefined -> 0 처리
+        const bigger = (this.arr[leftIndex] || 0) > (this.arr[rightIndex] || 0) ? leftIndex : rightIndex;
+
+        if(this.arr[index] < this.arr[bigger]) {
+            const temp = this.arr[index];
+            this.arr[index] = this.arr[bigger];
+            this.arr[bigger] = temp;
+
+            this.#heapify(bigger);
+        }
+    }
+
+    // 힙에 값 추가 시 배열 끝에 삽입 후 reheapUp으로 힙 속성 유지
+    insert(value) {
+        const index = this.arr.length; // 삽입할 위치 - 배열의 마지막 index
+        this.arr[index] = value; // 배열의 마지막에 값 추가
+        this.#reheapUp(index); // 위로 올라가며 최대 힙 구조 유지
     }
 
     // 최대 힙에서 최대값(root)를 제거하고 힙 구조 유지
@@ -90,23 +107,6 @@ class MaxHeap {
         return null;
     }
 
-    // 내부적으로 힙 구조를 복구하기 위해 사용되는 재귀 함수
-    #heapify(index) {
-        const leftIndex = index * 2 + 1;
-        const rightIndex = index * 2 + 2;
-
-        // 존재하지 않는 경우 undefined -> 0 처리
-        const bigger = (this.arr[leftIndex] || 0) > (this.arr[rightIndex] || 0) ? leftIndex : rightIndex;
-
-        if(this.arr[index] < this.arr[bigger]) {
-            const temp = this.arr[index];
-            this.arr[index] = this.arr[bigger];
-            this.arr[bigger] = temp;
-
-            this.#heapify(bigger);
-        }
-    }
-
     // 힙 내 특정 값(value)을 찾아 newValue로 변경 후 최대 힙 구조 복구
     update(value, newValue) {
         const index = this.search(value); // 수정할 값의 위치 검색
@@ -114,13 +114,16 @@ class MaxHeap {
 
         this.arr[index] = newValue; // 값 변경
 
-        // 마지막 노드부터 root까지 heapify를 수행하여 힙 구조 복구
+        // 마지막 노드(자식이 있는 부모 노드)부터 root까지 heapify를 수행하여 힙 구조 복구
         for(let i = Math.floor(this.arr.length / 2 - 1); i >= 0; i--) {
+            // Math.floor(this.arr.length / 2 - 1) 계산은 
+            // leaf가 아닌 노드에 대해서만 뒤에서부터 root 방향으로 구조를 맞춰가는 작업
+            // 만약 arr.length가 7이라면 7/2-1=2 0~2는 leaf가 아닌 부모 3~6는 leaf
             this.#heapify(i);
         }
     }
 
-    // 힙 내 특정 값(value) 삭제 후 최대 힙 구조 복구
+    // 힙 내 특정 값(value)을 삭제 후 최대 힙 구조 복구
     removeValue(value) {
         const index = this.search(value); // 삭제할 값의 위치 검색
         if(index === null) return false; // 값이 존재하지 않으면 false 반환
@@ -129,17 +132,12 @@ class MaxHeap {
 
         // 마지막 노드부터 root까지 heapify를 수행하여 힙 구조 복구
         for(let i = Math.floor(this.arr.length / 2 - 1); i >= 0; i--) {
+            // Math.floor(this.arr.length / 2 - 1) 계산은 
+            // leaf가 아닌 노드에 대해서만 뒤에서부터 root 방향으로 구조를 맞춰가는 작업
+            // 만약 arr.length가 7이라면 7/2-1=2 0~2는 leaf가 아닌 부모 3~6는 leaf
             this.#heapify(i);
         }
     }
 }
 
 const heap = new MaxHeap();
-
-heap.insert(8);
-heap.insert(19);
-heap.insert(23);
-heap.insert(32);
-heap.insert(45);
-heap.insert(56);
-heap.insert(78);

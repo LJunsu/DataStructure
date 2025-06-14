@@ -9,13 +9,18 @@ class HashTable {
     }
 
     // 해시 함수 - 키를 테이블 인덱스로 변환
-    hashF(key) {
-        return key % this.capa;
+    hashF(key, mod) {
+        if(typeof key === "string") {
+            return key.split("").reduce((a, c) => a + c.charCodeAt(), 0) % mod
+        }
+        if(typeof key === "number") {
+            return key % mod;
+        }
     }
 
     // key, value 쌍을 저장
     insert(key, value) {
-        const hash = this.hashF(key); // 키를 해시로 변환
+        const hash = this.hashF(key, this.capa); // 키를 해시로 변환
 
         if(!this.data[hash]) {
             // 버킷(bucket) - 해시 테이블에서 같은 해시 값을 가지는 데이터들이 저장되는 공간
@@ -27,7 +32,7 @@ class HashTable {
     
     // key로 value 찾기
     search(key) {
-        const hash = this.hashF(key); // 키를 해시로 변환
+        const hash = this.hashF(key, this.capa); // 키를 해시로 변환
 
         // hash는 key % capa로 계산한 값으로, 같은 hash 값을 가진 여러 key들이 data[hash]에 저장됨
         // data[hash]로 버킷(버킷)에 접근한 뒤 해당 배열 내에서 key 값이 일치하는 항목을 찾아 반환
@@ -44,7 +49,7 @@ class HashTable {
 
     // 해당 key의 value를 새 값으로 업데이트
     update(key, value) {
-        const hash = this.hashF(key);
+        const hash = this.hashF(key, this.capa);
 
         // key % capa로 구한 hash 인덱스에 접근
         // 해당 버킷(배열) 내에서 key가 일치하는 항목을 찾아 그 항목의 value 값을 새 값으로 갱신
@@ -58,7 +63,7 @@ class HashTable {
     }
 
     delete(key) {
-        const hash = this.hashF(key);
+        const hash = this.hashF(key, this.capa);
 
         // key % capa로 구한 hash 인덱스에 접근
         // 해당 버킷(배열) 내에서 key가 일치하는 항목을 찾아 해당 항목을 배열에서 제거

@@ -283,6 +283,49 @@
 
 + ## 그래프 (Graph)
 
++ 트리의 일반적인 형태
+  
+  leaf가 없고, 서로 간의 연결 관계를 여러 개 가지고 있는 자료구조
+
++ 구조
+
+  + 기존 트리 구조
+
+    Root와 In-degree가 1개인 단방향 그래프
+
+    Root, Node, leaf, Edge(선)
+
+  + 그래프
+
+    Vertex와 In-degree, Out-degree가 있는 방향과 무방향이 존재
+
+    Vertex (트리의 Node 역할), Arc (트리의 Edge 역할)
+
++ degree
+
+  In-degree : Vertex로 들어오는 Arc 갯수
+
+  Out-degree : Vertex에서 다른 Vertex로 빠져나가는 Arc 갯수
+
++ 방향, 무방향
+
+  무방향 : 화살표가 없으며, In, Out degree의 갯수가 같음
+
+  방향 : 화살표가 양쪽에 있다면 양방형, 한쪽만 있다면 단방향
+
++ 표현
+
+  그래프는 다양항 방법으로 표현이 가능
+
+  Vertex가 있고, 연결 관계인 Arc가 있다면 2차원 배열로 표현할 수 있음
+  
+  | \ | A | B | C | D |
+  | --- | --- | --- | --- | --- |
+  | A | 0 | 1 | 1 | 0 |
+  | B | 1 | 0 | 0 | 1 |
+  | C | 0 | 1 | 0 | 1 |
+  | D | 0 | 0 | 0 | 0 |
+
 + ## 해시 테이블 (Hash Table)
 
 + ## 레드 블랙 트리 (Red Black Tree)

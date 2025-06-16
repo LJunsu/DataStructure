@@ -399,8 +399,6 @@
     생성, 조회, 삭제 모두 O(n / hash)
 
 
-+ ## 레드 블랙 트리 (Red Black Tree)
-
 + ## 트리 순회 (Traversal)
 
   + BFS, DFS - 자료구조에서 활용하는 대표적인 알고리즘
@@ -533,7 +531,7 @@
 
       + In Order
      
-          선이 Node의 아래 쪽을 지나갈 때 출력
+          선이 Node의 아래쪽을 지나갈 때 출력
 
           [4, 2, 5, 1, 6, 3, 7]
 
@@ -542,3 +540,95 @@
         선이 Node의 오른쪽을 지나갈 때 출력
 
         [4, 5, 2, 6, 7, 3, 1]
+
+
++ ## 레드 블랙 트리 (Red Black Tree)
+
+  이진 탐색 트리를 기반 (왼쪽은 작은 값, 오른쪽은 큰 값) + Balanced Tree
+
+  + 레드 블랙 트리 규칙
+
+    1. 노드는 Red, Black 색상을 가짐
+    2. Root의 색상은 반드시 Black
+    3. 새로 추가된 노드의 색상은 Red
+    4. Red는 연속(부모와 자식이 모두 Red)되면 안됨 - Black는 연속을 허용
+    5. Red 노드의 자식은 Black
+    6. Root에서 모든 leaf까지 Black의 갯수가 같아야 함
+   
+    <pre>
+      ┌ B ┐
+      B   B
+
+      OK
+    </pre>
+
+    <pre>
+      ┌ B
+      B
+
+      Fail (6번 조건 X)
+    </pre>
+    
+    <pre>
+      ┌ B
+      R
+
+      OK
+    </pre>
+    <pre>
+      ┌ B
+      R
+
+      OK
+    </pre>
+    
+    <pre>
+        ┌ B ┐
+      ┌ B   B
+      B
+      
+      Fail (6번 조건 X)
+    </pre>
+    
+    <pre>
+        ┌ B ┐
+      ┌ R   R
+      R
+      
+      Fail (4번 조건 X)
+    </pre>
+
+
+  + 규칙 유지
+
+    다양한 규칙에 맞춰 트리를 유지하기 위해 Recolor, Restructure 두 방식을 통해 구조를 유지
+
+    Recolor - 삼촌잉 Red면 Recolor 수행
+    Restructure - 삼촌이 Black이거나 없다면 Restructure 수행
+
+
+  + Recolor
+
+    <pre>
+      ┌        B(할아버지) ┐
+      R(부모) ┐            R(삼촌)
+              R(나)
+    </pre>
+
+    부모와 삼촌을 Red에서 Black로, 할아버지를 Black에서 Red로 변경
+
+    <pre>
+      ┌        R(할아버지) ┐
+      B(부모) ┐            B(삼촌)
+              R(나)
+    </pre>
+
+    단, root는 어떤 상황에도 Black 유지
+
+    <pre>
+      ┌        B(할아버지) ┐
+      B(부모) ┐            B(삼촌)
+              R(나)
+    </pre>
+
+    recololr 수행 후 변경으로 인한 상위 노드 간의 규칙이 어긋나면 재귀를 통해 구조를 유지하는 작업을 수행함

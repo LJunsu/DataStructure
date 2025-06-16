@@ -4,7 +4,7 @@ import { Stack } from "./StackAndLinkedList.js";
 
 // Breadth Firts Search - 너비 우선 탐색
 // 최단 경로에 적합
-function bfs(tree) {
+export function bfs(tree) {
     const queue = new Queue(); // bfs는 큐(Queue)를 사용하여 가까운 노드부터 탐색
     queue.enqueue(tree.root); // 루트(root) 노드부터 시작하여 같은 레벨의 노드를 먼저 탐색
 
@@ -25,7 +25,7 @@ function bfs(tree) {
 
 // Depth First Search - 깊이 우선 탐색
 // 모든 경우 탐색 시 적합
-function dfs(tree) {
+export function dfs(tree) {
     const stack = new Stack(); // dfs는 스택(Stack)을 사용하여 깊은 노드부터 탐색
     stack.push(tree.root); // 루트(root) 노드부터 시작하여 한쪽 끝까지 먼저 탐색
     
@@ -50,7 +50,7 @@ function dfs(tree) {
 // 각 순회의 콘솔 출력 위치에 따라 탐색 순서와 처리 방식이 달라짐
 
 // Pre Order Traversal - 전위 순회(루트 -> 왼쪽 -> 오른쪽)
-function preOrder(node) {
+export function preOrder(node) {
     if(!node) return; // 노드가 null이면 종료 - 재귀 탈출 조건
 
     console.log(node.value); // 노드 처리
@@ -59,7 +59,7 @@ function preOrder(node) {
 }
 
 // In Order Traversal - 중위 순회(왼쪽 -> 루트 -> 오른쪽)
-function inOrder(node) {
+export function inOrder(node) {
     if(!node) return; // 노드가 null이면 종료 - 재귀 탈출 조건
 
     inOrder(node.left); // 왼쪽 서브트리 순회
@@ -68,7 +68,7 @@ function inOrder(node) {
 }
 
 // Post Order - 후위 순회(왼쪽 -> 오른쪽 -> 루트)
-function postOrder(node) {
+export function postOrder(node) {
     if(!node) return; // 노드가 null이면 종료 - 재귀 탈출 조건
 
     postOrder(node.left); // 왼쪽 서브트리 순회

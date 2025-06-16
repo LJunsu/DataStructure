@@ -92,8 +92,11 @@
   length를 가질 수 있으며, 스택에 정해진 크기를 초과하면 스택오버플로우
 
 push↘  ↗pop
+
     │    │
+    
     │    │
+    
     └━━━━┘
 
     push O(1), pop O(1)
@@ -140,14 +143,6 @@ push↘  ↗pop
   + 정 이진 트리 (Full Binary Tree)
 
     자식 Node가 0 혹은 2 (자식 Node가 1개는 안됨)
-
-      ┌    ●    ┐
-    
-    ┌  ●  ┐     ┌ ● ┐
-    
-    ●   ┌ ● ┐   ●   ●
-    
-        ●   ●
 
   + 포화 이진 트리 (Perfect Binary Tree)
 
